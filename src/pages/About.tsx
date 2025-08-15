@@ -10,7 +10,7 @@ export const About = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/src/data/info.json');
+        const response = await fetch('/data/info.json');
         if (response.ok) {
           const data = await response.json();
           setInfoData(data);

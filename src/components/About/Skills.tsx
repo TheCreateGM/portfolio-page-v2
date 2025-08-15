@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { fetchJSON } from '@/utils/api';
 import type { InfoData } from '@/types';
 
 export const Skills = () => {
@@ -10,15 +11,11 @@ export const Skills = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/src/data/info.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchJSON<InfoData>('/data/info.json');
         setInfoData(data);
       } catch (err) {
         console.error('Failed to fetch info data:', err);
-        setError('Could not load skill information.');
+        setError('Could not load skill information. Please try refreshing the page.');
       } finally {
         setLoading(false);
       }
