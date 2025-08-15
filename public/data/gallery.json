@@ -1,0 +1,17 @@
+[
+    {
+      "category": "Art",
+      "image": "gallery/img/1.jpg",
+      "link": "gallery/art.html"
+    },
+    {
+      "category": "Photograph",
+      "image": "gallery/img/2.jpg",
+      "link": "gallery/photo.html"
+    },
+    {
+      "category": "3D Model",
+      "image": "gallery/img/3.jpg",
+      "link": "gallery/model.html"
+    }
+  ]
