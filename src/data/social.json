@@ -1,0 +1,14 @@
+[
+    {"name": "Reddit", "url": "https://www.reddit.com/user/Routine_Hearing9954", "icon": "img/media-social/1.png", "fa_class": "fab fa-reddit-alien"},
+    {"name": "YouTube", "url": "https://www.youtube.com/@axogm", "icon": "img/media-social/2.png", "fa_class": "fab fa-youtube"},
+    {"name": "Instagram", "url": "https://www.instagram.com/creategm10", "icon": "img/media-social/3.png", "fa_class": "fab fa-instagram"},
+    {"name": "ArtStation", "url": "https://www.artstation.com/axogm", "icon": "img/media-social/4.png", "fa_class": "fab fa-artstation"},
+    {"name": "Facebook", "url": "https://www.facebook.com/profile.php?id=100087127034502", "icon": "img/media-social/5.png", "fa_class": "fab fa-facebook-f"},
+    {"name": "Twitter", "url": "https://twitter.com/amongus11935344", "icon": "img/media-social/6.png", "fa_class": "fab fa-twitter"},
+    {"name": "itch.io", "url": "https://axogm.itch.io/", "icon": "img/media-social/7.png", "fa_class": "fab fa-itch-io"},
+    {"name": "Discord", "url": "https://discord.com/invite/TNNhyxdP2G", "icon": "img/media-social/8.png", "fa_class": "fab fa-discord"},
+    {"name": "Twitch", "url": "https://www.twitch.tv/thecreategmlive", "icon": "img/media-social/9.png", "fa_class": "fab fa-twitch"},
+    {"name": "GitHub", "url": "https://github.com/TheCreateGM", "icon": "img/media-social/10.png", "fa_class": "fab fa-github"},
+    {"name": "TurboSquid", "url": "https://www.turbosquid.com/Search/Artists/AxoGM", "icon": "img/media-social/11.png", "fa_class": "fas fa-cube"},
+    {"name": "CGTrader", "url": "https://www.cgtrader.com/creategm10", "icon": "img/media-social/12.png", "fa_class": "fas fa-cubes"}
+  ]

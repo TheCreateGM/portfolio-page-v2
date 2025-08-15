@@ -1,0 +1,25 @@
+{
+    "bio": {
+      "nickname": "Axo",
+      "location": "Malaysia",
+      "introduction": "Many people call me Axo and you can call me Axo if you want. Im from Malaysia."
+    },
+    "skills": [
+      {
+        "image": "img/info/1.png",
+        "description": "Im a linux user who using Fedora Spin XFCE desktop (main) and EndeavourOS Community Edition BSPWM base on Arch Linux (for networking)"
+      },
+      {
+        "image": "img/info/2.png",
+        "description": "Im good at making website by using html, css, and js like this page you see here."
+      },
+      {
+        "image": "img/info/3.png",
+        "description": "Im also making game stuff using Godot, Unity (C#), LWJGL (Java), and Pygame (Python) but most of it project have been cancel..."
+      },
+      {
+        "image": "img/info/4.png",
+        "description": "I can say that i always do 3D model stuff in Blender because i will use my model to my game."
+      }
+    ]
+  }
