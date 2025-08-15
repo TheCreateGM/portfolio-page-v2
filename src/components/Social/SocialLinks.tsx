@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { trackEvent, analyticsConfig } from '@/config/analytics';
 import type { SocialLink } from '@/types';
 
 export const SocialLinks = () => {
@@ -75,8 +76,11 @@ export const SocialLinks = () => {
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center p-4 rounded-lg bg-white dark:bg-secondary-dark border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-200 group"
+            className="flex flex-col items-center p-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-200 group"
             title={platform.name}
+            onClick={() => trackEvent(analyticsConfig.events.SOCIAL_CLICK, { 
+              platform: platform.name 
+            })}
           >
             <div className="text-gray-600 dark:text-gray-400 group-hover:text-blue-600 transition-colors duration-200 flex items-center justify-center">
               {getIconComponent(platform.fa_class, platform.name)}

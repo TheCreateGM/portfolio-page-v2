@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Router } from '@/components/Router';
+import { PrivacyNotice } from '@/components/Privacy/PrivacyNotice';
 import './App.css';
 
 function App() {
@@ -29,7 +32,14 @@ function App() {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
-  return <Router />;
+  return (
+    <>
+      <Router />
+      <Analytics />
+      <SpeedInsights />
+      <PrivacyNotice />
+    </>
+  );
 }
 
 export default App;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { trackEvent, analyticsConfig } from '@/config/analytics';
 import type { Theme } from '@/types';
 
 export const useTheme = () => {
@@ -24,7 +25,9 @@ export const useTheme = () => {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    trackEvent(analyticsConfig.events.THEME_TOGGLE, { theme: newTheme });
   };
 
   return { theme, toggleTheme };

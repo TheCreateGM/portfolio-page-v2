@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { trackEvent, analyticsConfig } from '@/config/analytics';
 import type { ProjectsData } from '@/types';
 
 export const ProjectsList = () => {
@@ -126,6 +127,11 @@ export const ProjectsList = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200"
+                            onClick={() => trackEvent(analyticsConfig.events.PROJECT_VIEW, { 
+                              project: project.title, 
+                              category: category,
+                              type: 'live'
+                            })}
                           >
                             <i className="fas fa-external-link-alt mr-1"></i>
                             View Live
@@ -137,6 +143,11 @@ export const ProjectsList = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200"
+                            onClick={() => trackEvent(analyticsConfig.events.PROJECT_VIEW, { 
+                              project: project.title, 
+                              category: category,
+                              type: 'repo'
+                            })}
                           >
                             <i className="fab fa-github mr-1"></i>
                             View Code
