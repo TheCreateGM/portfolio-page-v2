@@ -38,8 +38,16 @@
     <link rel="preload" href="/data/info.json" as="fetch" crossorigin="anonymous" />
     <link rel="preload" href="/data/projects.json" as="fetch" crossorigin="anonymous" />
     <link rel="preload" href="/data/social.json" as="fetch" crossorigin="anonymous" />
-    <script type="module" crossorigin src="/assets/index-X-9mKgpP.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CNWag3Oo.css">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//vitals.vercel-insights.com" />
+    
+    <!-- Preconnect to critical third-party origins -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://vitals.vercel-insights.com" crossorigin />
+    <script type="module" crossorigin src="/assets/index-B6HJcLzO.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C5AFpsFk.css">
   </head>
   <body>
     <div id="root"></div>
