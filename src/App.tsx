@@ -18,17 +18,31 @@ function App() {
     PerformanceMonitor.getInstance();
   }, []);
 
-  // Handle navigation clicks
+  // Handle navigation clicks - only for internal SPA routes
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
       
-      if (link && link.href && link.origin === window.location.origin) {
-        e.preventDefault();
-        const path = new URL(link.href).pathname;
-        window.history.pushState({}, '', path);
-        window.dispatchEvent(new PopStateEvent('popstate'));
+      if (link && link.href) {
+        // Don't intercept external links (different origin or target="_blank")
+        if (link.target === '_blank' || 
+            link.rel.includes('noopener') || 
+            link.origin !== window.location.origin ||
+            link.href.startsWith('http') && !link.href.startsWith(window.location.origin)) {
+          return; // Let the browser handle external links normally
+        }
+        
+        // Only intercept internal SPA routes
+        const url = new URL(link.href);
+        const path = url.pathname;
+        const internalRoutes = ['/', '/about', '/projects', '/social'];
+        
+        if (internalRoutes.includes(path)) {
+          e.preventDefault();
+          window.history.pushState({}, '', path);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        }
       }
     };
 
