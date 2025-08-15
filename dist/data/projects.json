@@ -1,0 +1,96 @@
+{
+    "website": [
+      {
+        "title": "portfolio 2025",
+        "image": "img/project/stuff/10.png",
+        "live_link": "http://axogmweb.unaux.com/",
+        "repo_link": null,
+        "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png", "img/project/logo/9.png"]
+      },
+      {
+        "title": "portfolio 2022",
+        "image": "img/project/stuff/1.png",
+        "live_link": "http://axogmweb.unaux.com/",
+        "repo_link": "https://github.com/AxoGM/axogm.github.io",
+        "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
+      },
+      {
+        "title": "Clone 2B2T 2021",
+        "image": "img/project/stuff/9.png",
+        "live_link": "archive/2a2t.html",
+        "repo_link": null,
+        "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
+      }
+    ],
+    "3dmodel": [
+      {
+        "title": "fnaf freddy",
+        "image": "img/project/stuff/6.png",
+        "live_link": "https://axogm.itch.io/3d-model-freddy-fnaf",
+        "repo_link": null,
+        "logos": ["img/project/logo/4.png"]
+      }
+    ],
+    "game": [
+      {
+        "title": "player movement [unity]",
+        "image": "img/project/stuff/2.png",
+        "live_link": null,
+        "repo_link": "https://github.com/AxoGM/PlayerMovement",
+        "logos": ["img/project/logo/6.png"]
+      },
+      {
+        "title": "tower block [Web]",
+        "image": "img/project/stuff/7.png",
+        "live_link": "project/game/towerblock/towerblock.html",
+        "repo_link": null,
+        "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
+      },
+      {
+        "title": "shot game [Web]",
+        "image": "img/project/stuff/8.png",
+        "live_link": "project/game/shotgame/shotgame.html",
+        "repo_link": null,
+        "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
+      },
+      {
+        "title": "minecraft clone go [Golang]",
+        "image": "img/project/stuff/11.png",
+        "live_link": null,
+        "repo_link": "https://github.com/TheCreateGM/minecraft-clone-go",
+        "logos": ["img/project/logo/10.png"]
+      }
+    ],
+    "Application": [
+      {
+        "title": "note app [python]",
+        "image": "img/project/stuff/12.png",
+        "live_link": null,
+        "repo_link": "https://github.com/TheCreateGM/note-app",
+        "logos": ["img/project/logo/8.png"]
+      }
+    ],
+    "other": [
+      {
+        "title": "ball simulator [python]",
+        "image": "img/project/stuff/3.png",
+        "live_link": null,
+        "repo_link": "https://github.com/AxoGM/Python-ball-simulator-",
+        "logos": ["img/project/logo/8.png"]
+      },
+      {
+        "title": "bmi [c++]",
+        "image": "img/project/stuff/4.png",
+        "live_link": null,
+        "repo_link": "https://github.com/AxoGM/bmi",
+        "logos": ["img/project/logo/5.png"]
+      },
+      {
+        "title": "age [c++]",
+        "image": "img/project/stuff/5.png",
+        "live_link": null,
+        "repo_link": "https://github.com/AxoGM/age",
+        "logos": ["img/project/logo/5.png"]
+      }
+    ]
+  }
