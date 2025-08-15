@@ -17,7 +17,7 @@
       {
         "title": "Clone 2B2T 2021",
         "image": "img/project/stuff/9.png",
-        "live_link": "archive/2a2t.html",
+        "live_link": "/games/archive/2a2t.html",
         "repo_link": null,
         "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
       }
@@ -42,14 +42,14 @@
       {
         "title": "tower block [Web]",
         "image": "img/project/stuff/7.png",
-        "live_link": "project/game/towerblock/towerblock.html",
+        "live_link": "/games/towerblock/towerblock.html",
         "repo_link": null,
         "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
       },
       {
         "title": "shot game [Web]",
         "image": "img/project/stuff/8.png",
-        "live_link": "project/game/shotgame/shotgame.html",
+        "live_link": "/games/shotgame/shotgame.html",
         "repo_link": null,
         "logos": ["img/project/logo/1.png", "img/project/logo/2.png", "img/project/logo/3.png"]
       },
