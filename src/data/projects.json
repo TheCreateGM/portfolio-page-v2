@@ -26,7 +26,7 @@
     {
       "title": "Clone 2B2T 2021",
       "image": "img/project/stuff/9.png",
-      "live_link": "https://axogmweb.unaux.com/archive/2a2t.html",
+      "live_link": "/games/archive/2a2t.html",
       "repo_link": null,
       "logos": [
         "img/project/logo/1.png",
@@ -59,7 +59,7 @@
     {
       "title": "tower block [Web]",
       "image": "img/project/stuff/7.png",
-      "live_link": "https://axogmweb.unaux.com/project/game/towerblock/towerblock.html",
+      "live_link": "/games/towerblock/towerblock.html",
       "repo_link": null,
       "logos": [
         "img/project/logo/1.png",
@@ -70,7 +70,7 @@
     {
       "title": "shot game [Web]",
       "image": "img/project/stuff/8.png",
-      "live_link": "https://axogmweb.unaux.com/project/game/shotgame/shotgame.html",
+      "live_link": "/games/shotgame/shotgame.html",
       "repo_link": null,
       "logos": [
         "img/project/logo/1.png",

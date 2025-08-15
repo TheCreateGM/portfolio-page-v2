@@ -33,12 +33,13 @@ function App() {
           return; // Let the browser handle external links normally
         }
         
-        // Only intercept internal SPA routes
+        // Only intercept internal SPA routes (not games)
         const url = new URL(link.href);
         const path = url.pathname;
         const internalRoutes = ['/', '/about', '/projects', '/social'];
         
-        if (internalRoutes.includes(path)) {
+        // Don't intercept game links - let them open normally
+        if (internalRoutes.includes(path) && !path.startsWith('/games/')) {
           e.preventDefault();
           window.history.pushState({}, '', path);
           window.dispatchEvent(new PopStateEvent('popstate'));
