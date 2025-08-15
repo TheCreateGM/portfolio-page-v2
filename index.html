@@ -4,10 +4,40 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AxoGM - Programmer and 3D Model Maker Portfolio" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AxoGM - Programmer and 3D Model Maker Portfolio. Showcasing web development, 3D modeling, and game development projects." />
+    <meta name="keywords" content="AxoGM, programmer, 3D model maker, web developer, portfolio, React, TypeScript, Blender" />
+    <meta name="author" content="AxoGM" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AxoGM - Portfolio" />
+    <meta property="og:description" content="Programmer and 3D Model Maker Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://axogm.vercel.app" />
+    <meta property="og:image" content="https://axogm.vercel.app/icon.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="AxoGM - Portfolio" />
+    <meta name="twitter:description" content="Programmer and 3D Model Maker Portfolio" />
+    <meta name="twitter:image" content="https://axogm.vercel.app/icon.png" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    
     <title>AxoGM - Portfolio</title>
+    
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/data/info.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/data/projects.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="/data/social.json" as="fetch" crossorigin="anonymous" />
   </head>
   <body>
     <div id="root"></div>
