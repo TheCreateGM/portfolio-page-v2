@@ -1,21 +1,27 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { trackEvent, analyticsConfig } from '@/config/analytics';
+import { usePerformance } from '@/hooks/usePerformance';
+import { LazyImage } from '@/components/Performance/LazyImage';
 import type { ProjectsData } from '@/types';
 
 export const ProjectsList = () => {
   const [projectsData, setProjectsData] = useState<ProjectsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { markPerformance, measurePerformance } = usePerformance('ProjectsList');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        markPerformance('data-fetch-start');
         const response = await fetch('/data/projects.json');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        markPerformance('data-fetch-end');
+        measurePerformance('data-fetch-duration', 'data-fetch-start', 'data-fetch-end');
         setProjectsData(data);
       } catch (err) {
         console.error('Failed to fetch projects data:', err);
@@ -26,7 +32,7 @@ export const ProjectsList = () => {
     };
 
     fetchData();
-  }, []);
+  }, [markPerformance, measurePerformance]);
 
   if (loading) {
     return (
@@ -86,10 +92,10 @@ export const ProjectsList = () => {
                   {/* Project Image */}
                   <div className="aspect-video overflow-hidden">
                     {project.image ? (
-                      <img
+                      <LazyImage
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full"
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">

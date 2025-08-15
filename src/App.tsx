@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Router } from '@/components/Router';
 import { PrivacyNotice } from '@/components/Privacy/PrivacyNotice';
+import { PerformanceMonitor } from '@/config/performance';
 import './App.css';
 
 function App() {
@@ -12,6 +13,9 @@ function App() {
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     
     document.documentElement.classList.add(theme);
+
+    // Initialize performance monitoring
+    PerformanceMonitor.getInstance();
   }, []);
 
   // Handle navigation clicks
