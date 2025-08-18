@@ -13,7 +13,7 @@ export const Hero = () => {
             Hello, I'm AxoGM
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400">
-            I'm a programmer and 3D model maker.
+            I'm a fullstack Engineer.
           </p>
         </motion.div>
       </div>
