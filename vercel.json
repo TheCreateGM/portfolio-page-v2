@@ -34,16 +34,12 @@
           "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), screen-wake-lock=(), web-share=()"
         },
         {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
           "key": "Cross-Origin-Opener-Policy",
           "value": "same-origin"
         },
         {
           "key": "Cross-Origin-Resource-Policy",
-          "value": "same-origin"
+          "value": "cross-origin"
         },
         {
           "key": "X-DNS-Prefetch-Control",
@@ -51,7 +47,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtVo=' cdnjs.cloudflare.com vitals.vercel-insights.com vercel.live; script-src-elem 'self' 'unsafe-inline' cdnjs.cloudflare.com vitals.vercel-insights.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com; style-src-elem 'self' 'unsafe-inline' cdnjs.cloudflare.com; img-src 'self' data: https: blob:; font-src 'self' cdnjs.cloudflare.com data:; connect-src 'self' vitals.vercel-insights.com vercel.live; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests; block-all-mixed-content;"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com vitals.vercel-insights.com vercel.live *.vercel.app; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com; img-src 'self' data: https: blob:; font-src 'self' cdnjs.cloudflare.com data:; connect-src 'self' vitals.vercel-insights.com vercel.live *.vercel.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
         }
       ]
     },
@@ -92,11 +88,6 @@
       ]
     }
   ],
-  "functions": {
-    "app.js": {
-      "maxDuration": 30
-    }
-  },
   "regions": ["iad1"],
   "cleanUrls": true,
   "trailingSlash": false,
