@@ -3,7 +3,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Router } from '@/components/Router';
 import { PrivacyNotice } from '@/components/Privacy/PrivacyNotice';
+import { ParticleBackground } from '@/components/ui/ParticleBackground';
 import { PerformanceMonitor } from '@/config/performance';
+import { SecurityProvider } from '@/contexts/SecurityContext';
 import './App.css';
 
 function App() {
@@ -52,12 +54,13 @@ function App() {
   }, []);
 
   return (
-    <>
+    <SecurityProvider>
+      <ParticleBackground />
       <Router />
       <Analytics />
       <SpeedInsights />
       <PrivacyNotice />
-    </>
+    </SecurityProvider>
   );
 }
 

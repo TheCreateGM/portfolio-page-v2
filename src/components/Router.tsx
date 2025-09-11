@@ -3,6 +3,7 @@ import { Home } from '@/pages/Home';
 import { About } from '@/pages/About';
 import { Projects } from '@/pages/Projects';
 import { Social } from '@/pages/Social';
+import { ParticleTest } from '@/pages/ParticleTest';
 
 export const Router = () => {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -27,6 +28,8 @@ export const Router = () => {
         return <Projects />;
       case '/social':
         return <Social />;
+      case '/particle-test':
+        return <ParticleTest />;
       default:
         return <Home />;
     }

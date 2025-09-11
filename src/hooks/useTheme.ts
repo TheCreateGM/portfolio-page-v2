@@ -24,11 +24,30 @@ export const useTheme = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  // Listen for system preference changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only update if no explicit theme is set in localStorage
+      if (!localStorage.getItem('theme')) {
+        const newTheme: Theme = e.matches ? 'dark' : 'light';
+        setTheme(newTheme);
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     trackEvent(analyticsConfig.events.THEME_TOGGLE, { theme: newTheme });
   };
 
-  return { theme, toggleTheme };
+  return { 
+    theme, 
+    toggleTheme,
+    isDark: theme === 'dark'
+  };
 };
