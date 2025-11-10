@@ -6,7 +6,7 @@
   "cleanUrls": true,
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "installCommand": "npm install --production=false",
+  "installCommand": "npm install",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
