@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "title": "Welcome to My Portfolio Blog",
+    "slug": "welcome-to-my-portfolio",
+    "excerpt": "This is my first blog post! Learn about my journey as a developer and what you can expect from this blog.",
+    "content": "# Welcome to My Portfolio Blog\n\nHello and welcome! I'm excited to share my thoughts, projects, and experiences with you.\n\n## What You'll Find Here\n\n- **Project Updates**: Behind-the-scenes looks at my latest work\n- **Tech Insights**: Tips and tricks I've learned along the way\n- **Career Journey**: My experiences and lessons in software development\n\n## Why I Started This Blog\n\nI believe in learning in public and sharing knowledge with the community. This blog is my way of giving back and documenting my growth as a developer.\n\nStay tuned for more posts!",
+    "cover_image": null,
+    "tags": ["welcome", "introduction"],
+    "published": true,
+    "published_at": "2025-11-10T00:00:00Z",
+    "author": {
+      "name": "AxoGM",
+      "avatar": null
+    },
+    "created_at": "2025-11-10T00:00:00Z",
+    "updated_at": "2025-11-10T00:00:00Z"
+  },
+  {
+    "id": "2",
+    "title": "Building a Full-Stack Portfolio",
+    "slug": "building-fullstack-portfolio",
+    "excerpt": "A deep dive into the architecture and technologies behind this portfolio website.",
+    "content": "# Building a Full-Stack Portfolio\n\nIn this post, I'll walk you through how I built this portfolio website from scratch.\n\n## Tech Stack\n\n### Frontend\n- **React** with TypeScript for type safety\n- **Vite** for lightning-fast development\n- **Tailwind CSS** for beautiful, responsive design\n\n### Backend Services\n- **Supabase** for authentication and database\n- **Giscus** for GitHub-based comments\n- **Vercel** for deployment and hosting\n\n## Key Features\n\n1. **Responsive Design**: Works perfectly on mobile and desktop\n2. **Dark Mode**: Automatic theme switching\n3. **Blog System**: You're reading it!\n4. **Project Showcase**: Dynamic project cards\n5. **Contact Form**: Easy way to get in touch\n\n## Development Process\n\nI started with a simple static site and gradually added features. The key was to:\n\n- Plan the architecture first\n- Build incrementally\n- Test thoroughly\n- Deploy early and often\n\n## Lessons Learned\n\n- **TypeScript is worth it**: Caught so many bugs early\n- **Tailwind speeds up development**: No more wrestling with CSS\n- **Vercel is amazing**: Deploy with a single `git push`\n\nCheck out the code on [GitHub](https://github.com/TheCreateGM/portfolio-page-v2)!",
+    "cover_image": null,
+    "tags": ["react", "typescript", "web-development"],
+    "published": true,
+    "published_at": "2025-11-10T00:00:00Z",
+    "author": {
+      "name": "AxoGM",
+      "avatar": null
+    },
+    "created_at": "2025-11-10T00:00:00Z",
+    "updated_at": "2025-11-10T00:00:00Z"
+  },
+  {
+    "id": "3",
+    "title": "My Journey with TypeScript",
+    "slug": "journey-with-typescript",
+    "excerpt": "How TypeScript transformed my JavaScript development and why you should consider it too.",
+    "content": "# My Journey with TypeScript\n\n## Why I Switched from JavaScript\n\nI used to write pure JavaScript. Then I discovered TypeScript, and everything changed.\n\n## The Benefits\n\n### 1. Catch Bugs Early\n```typescript\n// TypeScript catches this before runtime!\nfunction greet(name: string) {\n  console.log(`Hello, ${name}`);\n}\n\ngreet(123); // Error: Argument of type 'number' is not assignable to parameter of type 'string'\n```\n\n### 2. Better IntelliSense\n\nYour editor becomes 10x smarter with TypeScript. Auto-completion, inline documentation, and instant error checking.\n\n### 3. Refactoring Confidence\n\nRename a function? TypeScript updates all references. No more \"find and replace\" disasters.\n\n## Getting Started\n\nIf you're new to TypeScript:\n\n1. Start with `any` types (it's okay!)\n2. Gradually add proper types\n3. Enable strict mode when comfortable\n4. Use type inference - let TS do the work\n\n## Common Pitfalls\n\n- **Don't over-type everything**: Sometimes `any` is fine\n- **Use interfaces for objects**: More flexible than types\n- **Enable strict mode gradually**: Don't overwhelm yourself\n\n## My Recommendation\n\nIf you're starting a new project, use TypeScript. If you have an existing project, migrate gradually. The initial learning curve is worth it!\n\nHappy coding! 🚀",
+    "cover_image": null,
+    "tags": ["typescript", "javascript", "tutorial"],
+    "published": true,
+    "published_at": "2025-11-09T00:00:00Z",
+    "author": {
+      "name": "AxoGM",
+      "avatar": null
+    },
+    "created_at": "2025-11-09T00:00:00Z",
+    "updated_at": "2025-11-09T00:00:00Z"
+  }
+]

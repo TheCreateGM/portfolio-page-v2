@@ -6,6 +6,8 @@ import { PrivacyNotice } from '@/components/Privacy/PrivacyNotice';
 import { ParticleBackground } from '@/components/ui/ParticleBackground';
 import { PerformanceMonitor } from '@/config/performance';
 import { SecurityProvider } from '@/contexts/SecurityContext';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { UmamiAnalytics } from '@/components/Analytics/UmamiAnalytics';
 import './App.css';
 
 function App() {
@@ -38,10 +40,11 @@ function App() {
         // Only intercept internal SPA routes (not games)
         const url = new URL(link.href);
         const path = url.pathname;
-        const internalRoutes = ['/', '/about', '/projects', '/social'];
+        const internalRoutes = ['/', '/about', '/projects', '/social', '/blog', '/login'];
         
-        // Don't intercept game links - let them open normally
-        if (internalRoutes.includes(path) && !path.startsWith('/games/')) {
+        // Don't intercept game links or blog post links - let them open normally
+        const isBlogPost = path.startsWith('/blog/') && path !== '/blog';
+        if ((internalRoutes.includes(path) || isBlogPost) && !path.startsWith('/games/')) {
           e.preventDefault();
           window.history.pushState({}, '', path);
           window.dispatchEvent(new PopStateEvent('popstate'));
@@ -55,11 +58,14 @@ function App() {
 
   return (
     <SecurityProvider>
-      <ParticleBackground />
-      <Router />
-      <Analytics />
-      <SpeedInsights />
-      <PrivacyNotice />
+      <AuthProvider>
+        <ParticleBackground />
+        <Router />
+        <Analytics />
+        <SpeedInsights />
+        <UmamiAnalytics />
+        <PrivacyNotice />
+      </AuthProvider>
     </SecurityProvider>
   );
 }
