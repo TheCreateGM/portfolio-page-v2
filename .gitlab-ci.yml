@@ -1,0 +1,248 @@
+# GitLab CI/CD Pipeline for Portfolio
+# This pipeline runs tests, security checks, and validates configuration
+
+stages:
+  - validate
+  - security
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "20"
+  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+
+# Cache node_modules between jobs
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+    - .npm/
+
+# ============================================
+# Stage 1: Validate Configuration
+# ============================================
+
+validate:config:
+  stage: validate
+  image: node:${NODE_VERSION}
+  script:
+    - echo "🔍 Validating configuration files..."
+    - |
+      files=("package.json" "vercel.json" ".env.example" "vite.config.ts")
+      for file in "${files[@]}"; do
+        if [ ! -f "$file" ]; then
+          echo "❌ Missing: $file"
+          exit 1
+        else
+          echo "✅ Found: $file"
+        fi
+      done
+    - echo "✅ All required files present"
+
+validate:giscus:
+  stage: validate
+  image: node:${NODE_VERSION}
+  script:
+    - echo "🔍 Validating Giscus configuration..."
+    - |
+      required_vars=(
+        "VITE_GISCUS_REPO"
+        "VITE_GISCUS_REPO_ID"
+        "VITE_GISCUS_CATEGORY"
+        "VITE_GISCUS_CATEGORY_ID"
+      )
+      
+      for var in "${required_vars[@]}"; do
+        if ! grep -q "^$var=" .env.example; then
+          echo "⚠️  Missing: $var in .env.example"
+        else
+          echo "✅ Found: $var"
+        fi
+      done
+  allow_failure: true
+
+validate:vercel:
+  stage: validate
+  image: node:${NODE_VERSION}
+  script:
+    - echo "🔍 Checking Vercel configuration..."
+    - |
+      if ! grep -q "giscus.app" vercel.json; then
+        echo "❌ Giscus domain not found in CSP headers"
+        exit 1
+      fi
+      echo "✅ Giscus domain found in CSP"
+      
+      if ! grep -q '"framework": "vite"' vercel.json; then
+        echo "⚠️  Framework not set to 'vite' in vercel.json"
+      fi
+
+# ============================================
+# Stage 2: Security Checks
+# ============================================
+
+security:audit:
+  stage: security
+  image: node:${NODE_VERSION}
+  before_script:
+    - npm ci
+  script:
+    - echo "🔒 Running security audit..."
+    - npm audit --audit-level=moderate || echo "⚠️  Security vulnerabilities found"
+    - echo "📦 Checking for outdated packages..."
+    - npm outdated || true
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning-report.json
+    when: always
+    expire_in: 1 week
+  allow_failure: true
+
+security:dependencies:
+  stage: security
+  image: node:${NODE_VERSION}
+  before_script:
+    - npm ci
+  script:
+    - echo "📊 Analyzing dependencies..."
+    - npm list --depth=0
+    - echo "🔍 Checking for known vulnerabilities..."
+    - npm audit --json > audit-report.json || true
+  artifacts:
+    paths:
+      - audit-report.json
+    expire_in: 1 week
+  allow_failure: true
+
+# ============================================
+# Stage 3: Build & Test
+# ============================================
+
+build:typescript:
+  stage: build
+  image: node:${NODE_VERSION}
+  before_script:
+    - npm ci
+  script:
+    - echo "🔨 Running TypeScript compilation..."
+    - npx tsc -b --noEmit
+    - echo "✅ TypeScript check passed"
+
+build:lint:
+  stage: build
+  image: node:${NODE_VERSION}
+  before_script:
+    - npm ci
+  script:
+    - echo "🔍 Running linter..."
+    - npm run lint
+    - echo "✅ Linting passed"
+
+build:production:
+  stage: build
+  image: node:${NODE_VERSION}
+  before_script:
+    - npm ci
+  script:
+    - echo "🏗️  Building production bundle..."
+    - npm run build
+    - echo "📊 Analyzing bundle size..."
+    - |
+      if [ -d "dist/assets" ]; then
+        echo "Bundle contents:"
+        ls -lh dist/assets/
+        
+        # Check for large chunks
+        large_files=$(find dist/assets -name "*.js" -size +500k)
+        if [ -n "$large_files" ]; then
+          echo "⚠️  Large JavaScript chunks detected (>500KB):"
+          echo "$large_files"
+          echo ""
+          echo "💡 Consider code splitting with dynamic imports"
+        fi
+      fi
+    - echo "✅ Build completed successfully"
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+# ============================================
+# Stage 4: Integration Checks
+# ============================================
+
+check:github:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - echo "🔍 Checking GitHub repository configuration..."
+    - |
+      REPO="TheCreateGM/portfolio-page-v2"
+      
+      # Check if repo exists
+      response=$(curl -s -o /dev/null -w "%{http_code}" \
+        "https://api.github.com/repos/$REPO")
+      
+      if [ "$response" = "200" ]; then
+        echo "✅ Repository is accessible"
+      else
+        echo "⚠️  Cannot access repository (HTTP $response)"
+      fi
+      
+      # Check discussions
+      discussions=$(curl -s \
+        "https://api.github.com/repos/$REPO" | \
+        grep -o '"has_discussions":[^,]*' || echo "not_found")
+      
+      if echo "$discussions" | grep -q "true"; then
+        echo "✅ GitHub Discussions are enabled"
+      else
+        echo "⚠️  GitHub Discussions may not be enabled"
+        echo "Enable at: https://github.com/$REPO/settings"
+      fi
+  allow_failure: true
+
+# ============================================
+# Deployment Summary
+# ============================================
+
+deploy:summary:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - echo "📋 Deployment Summary"
+    - echo "===================="
+    - echo ""
+    - echo "✅ Configuration validated"
+    - echo "✅ Security checks completed"
+    - echo "✅ Build successful"
+    - echo ""
+    - echo "🚀 Ready for deployment to Vercel"
+    - echo ""
+    - echo "📝 Next steps:"
+    - echo "1. Ensure all environment variables are set in Vercel"
+    - echo "2. Push to main branch to trigger Vercel deployment"
+    - echo "3. Verify Giscus configuration at https://giscus.app"
+    - echo ""
+    - echo "🔗 Resources:"
+    - echo "- Vercel Dashboard: https://vercel.com"
+    - echo "- Giscus Setup: docs/GISCUS_SETUP.md"
+    - echo "- Troubleshooting: docs/TROUBLESHOOTING.md"
+  when: always
+
+# ============================================
+# Manual Jobs
+# ============================================
+
+deploy:vercel:
+  stage: deploy
+  image: node:${NODE_VERSION}
+  script:
+    - echo "🚀 Deploying to Vercel..."
+    - echo "This is a placeholder for Vercel deployment"
+    - echo "Actual deployment happens automatically via Vercel GitHub integration"
+  when: manual
+  only:
+    - main

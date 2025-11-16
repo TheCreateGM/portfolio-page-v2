@@ -1,0 +1,291 @@
+name: Build & Deployment Health Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # Job 1: Validate Environment Configuration
+  validate-config:
+    name: Validate Configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          echo "🔍 Checking required configuration files..."
+          
+          files=("package.json" "vercel.json" ".env.example" "vite.config.ts")
+          missing_files=()
+          
+          for file in "${files[@]}"; do
+            if [ ! -f "$file" ]; then
+              missing_files+=("$file")
+              echo "❌ Missing: $file"
+            else
+              echo "✅ Found: $file"
+            fi
+          done
+          
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo "::error::Missing required files: ${missing_files[*]}"
+            exit 1
+          fi
+
+      - name: Validate Giscus Configuration
+        run: |
+          echo "🔍 Validating Giscus configuration..."
+          
+          if [ ! -f ".env.example" ]; then
+            echo "::error::.env.example not found"
+            exit 1
+          fi
+          
+          required_vars=(
+            "VITE_GISCUS_REPO"
+            "VITE_GISCUS_REPO_ID"
+            "VITE_GISCUS_CATEGORY"
+            "VITE_GISCUS_CATEGORY_ID"
+          )
+          
+          missing_vars=()
+          for var in "${required_vars[@]}"; do
+            if ! grep -q "^$var=" .env.example; then
+              missing_vars+=("$var")
+              echo "❌ Missing: $var"
+            else
+              echo "✅ Found: $var"
+            fi
+          done
+          
+          if [ ${#missing_vars[@]} -gt 0 ]; then
+            echo "::warning::Missing Giscus variables in .env.example: ${missing_vars[*]}"
+          fi
+
+      - name: Check Vercel Configuration
+        run: |
+          echo "🔍 Checking Vercel configuration..."
+          
+          if ! grep -q "giscus.app" vercel.json; then
+            echo "::error::Giscus domain not found in CSP headers"
+            exit 1
+          fi
+          
+          echo "✅ Giscus domain found in CSP"
+          
+          # Check if framework is set correctly
+          if ! grep -q '"framework": "vite"' vercel.json; then
+            echo "::warning::Framework not set to 'vite' in vercel.json"
+          fi
+
+  # Job 2: Security Audit
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: |
+          echo "🔒 Running npm audit..."
+          npm audit --audit-level=moderate || echo "::warning::Security vulnerabilities found"
+
+      - name: Check outdated packages
+        run: |
+          echo "📦 Checking for outdated packages..."
+          npm outdated || true
+
+  # Job 3: Build Test
+  build-test:
+    name: Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript check
+        run: npx tsc -b --noEmit
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+
+      - name: Check bundle size
+        run: |
+          echo "📊 Analyzing bundle size..."
+          
+          if [ -d "dist/assets" ]; then
+            echo "Bundle contents:"
+            ls -lh dist/assets/
+            
+            # Check for large chunks
+            large_files=$(find dist/assets -name "*.js" -size +500k)
+            if [ -n "$large_files" ]; then
+              echo "::warning::Large JavaScript chunks detected (>500KB):"
+              echo "$large_files"
+              echo ""
+              echo "💡 Consider code splitting with dynamic imports"
+            fi
+          fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: dist/
+          retention-days: 7
+
+  # Job 4: GitHub Integration Check
+  github-integration:
+    name: GitHub Integration Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check GitHub Discussions
+        run: |
+          echo "🔍 Checking GitHub repository configuration..."
+          
+          REPO="${{ github.repository }}"
+          
+          # Check if repo exists and is accessible
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/$REPO")
+          
+          if [ "$response" = "200" ]; then
+            echo "✅ Repository is accessible"
+          else
+            echo "::error::Cannot access repository (HTTP $response)"
+            exit 1
+          fi
+          
+          # Check if Discussions are enabled
+          discussions=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO" | \
+            grep -o '"has_discussions":[^,]*' || echo "not_found")
+          
+          if echo "$discussions" | grep -q "true"; then
+            echo "✅ GitHub Discussions are enabled"
+          else
+            echo "::warning::GitHub Discussions may not be enabled"
+            echo "Enable at: https://github.com/$REPO/settings"
+          fi
+
+      - name: Check Giscus App Installation
+        run: |
+          echo "🔍 Checking Giscus app installation..."
+          echo ""
+          echo "To verify Giscus is installed:"
+          echo "1. Visit: https://github.com/apps/giscus"
+          echo "2. Check if it's installed for: ${{ github.repository }}"
+          echo "3. Configure at: https://giscus.app"
+          echo ""
+          echo "Required settings:"
+          echo "- Repository: ${{ github.repository }}"
+          echo "- Enable Discussions in repo settings"
+          echo "- Create 'Announcements' category (or your preferred category)"
+
+  # Job 5: Vercel Deployment Check
+  vercel-check:
+    name: Vercel Deployment Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Vercel deployment status
+        run: |
+          echo "🚀 Vercel Deployment Information"
+          echo "================================"
+          echo ""
+          echo "Project URL: https://axogm.vercel.app"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo ""
+          echo "📋 Deployment Checklist:"
+          echo "✓ Build command: npm run build"
+          echo "✓ Output directory: dist"
+          echo "✓ Framework: Vite"
+          echo ""
+          echo "🔧 Environment Variables to set in Vercel:"
+          echo "- VITE_SUPABASE_URL"
+          echo "- VITE_SUPABASE_ANON_KEY"
+          echo "- VITE_DIRECTUS_URL"
+          echo "- VITE_MEILISEARCH_URL"
+          echo "- VITE_MEILISEARCH_KEY"
+          echo "- VITE_GISCUS_REPO"
+          echo "- VITE_GISCUS_REPO_ID"
+          echo "- VITE_GISCUS_CATEGORY"
+          echo "- VITE_GISCUS_CATEGORY_ID"
+          echo "- VITE_UMAMI_SCRIPT_URL"
+          echo "- VITE_UMAMI_WEBSITE_ID"
+
+  # Job 6: Integration Summary
+  summary:
+    name: Build Summary
+    runs-on: ubuntu-latest
+    needs: [validate-config, security-audit, build-test, github-integration]
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          echo "# 🎯 Build & Deployment Health Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Job Status" >> $GITHUB_STEP_SUMMARY
+          echo "- Configuration Validation: ${{ needs.validate-config.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Security Audit: ${{ needs.security-audit.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Build Test: ${{ needs.build-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- GitHub Integration: ${{ needs.github-integration.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔧 Common Issues & Solutions" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Giscus 404 Error" >> $GITHUB_STEP_SUMMARY
+          echo "1. Enable GitHub Discussions in repo settings" >> $GITHUB_STEP_SUMMARY
+          echo "2. Install Giscus app: https://github.com/apps/giscus" >> $GITHUB_STEP_SUMMARY
+          echo "3. Get correct IDs from: https://giscus.app" >> $GITHUB_STEP_SUMMARY
+          echo "4. Update environment variables in Vercel" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Large Bundle Size" >> $GITHUB_STEP_SUMMARY
+          echo "- Use dynamic imports: \`const Component = lazy(() => import('./Component'))\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Configure manual chunks in vite.config.ts" >> $GITHUB_STEP_SUMMARY
+          echo "- Consider code splitting strategies" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Security Vulnerabilities" >> $GITHUB_STEP_SUMMARY
+          echo "- Run: \`npm audit fix\`" >> $GITHUB_STEP_SUMMARY
+          echo "- For breaking changes: \`npm audit fix --force\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Review: \`npm audit\` for details" >> $GITHUB_STEP_SUMMARY

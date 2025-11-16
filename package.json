@@ -19,7 +19,9 @@
     "security:scan": "npm run security:audit && npm run security:check",
     "security:test": "node scripts/security-test.cjs",
     "build:secure": "npm run security:scan && npm run lint && npm run build",
-    "deploy:secure": "npm run build:secure && npm run preview"
+    "deploy:secure": "npm run build:secure && npm run preview",
+    "check:giscus": "bash scripts/check-giscus.sh",
+    "check:all": "npm run check:giscus && npm run lint && npm run build"
   },
   "dependencies": {
     "@directus/sdk": "20.1.1",
