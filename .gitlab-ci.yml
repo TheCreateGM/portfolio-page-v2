@@ -208,7 +208,7 @@ check:github:
 # Deployment Summary
 # ============================================
 
-deploy:summary:
+deployment:summary:
   stage: deploy
   image: node:${NODE_VERSION}
   script:

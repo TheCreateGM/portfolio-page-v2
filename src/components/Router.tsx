@@ -7,6 +7,7 @@ import { ParticleTest } from '@/pages/ParticleTest';
 import { Login } from '@/pages/Login';
 import { Blog } from '@/pages/Blog';
 import { BlogPost } from '@/pages/BlogPost';
+import EnvCheck from '@/pages/EnvCheck';
 
 type StaticRoute = {
   path: string;
@@ -41,6 +42,7 @@ export const Router = () => {
     { path: '/particle-test', component: ParticleTest },
     { path: '/login', component: Login },
     { path: '/blog', component: Blog },
+    { path: '/env-check', component: EnvCheck },
     {
       pattern: /^\/blog\/([^/]+)$/,
       component: ({ slug }) => <BlogPost slug={slug} />
