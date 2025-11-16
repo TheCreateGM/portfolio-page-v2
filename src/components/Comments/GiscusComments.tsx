@@ -1,7 +1,13 @@
+import { useEffect } from 'react'
 import Giscus from '@giscus/react'
 
 export const GiscusComments = () => {
   const theme = import.meta.env.VITE_GISCUS_THEME || 'preferred_color_scheme'
+  
+  // Store current URL before GitHub OAuth redirect
+  useEffect(() => {
+    sessionStorage.setItem('giscus_return_url', window.location.pathname + window.location.search)
+  }, [])
   
   // Check if required environment variables are set
   const repo = import.meta.env.VITE_GISCUS_REPO

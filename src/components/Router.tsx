@@ -8,6 +8,7 @@ import { Login } from '@/pages/Login';
 import { Blog } from '@/pages/Blog';
 import { BlogPost } from '@/pages/BlogPost';
 import EnvCheck from '@/pages/EnvCheck';
+import { GiscusCallback } from '@/pages/GiscusCallback';
 
 type StaticRoute = {
   path: string;
@@ -43,6 +44,7 @@ export const Router = () => {
     { path: '/login', component: Login },
     { path: '/blog', component: Blog },
     { path: '/env-check', component: EnvCheck },
+    { path: '/giscus-callback', component: GiscusCallback },
     {
       pattern: /^\/blog\/([^/]+)$/,
       component: ({ slug }) => <BlogPost slug={slug} />
