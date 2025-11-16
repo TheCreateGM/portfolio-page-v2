@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { 
   securityMonitor, 
@@ -9,13 +9,13 @@ import {
 
 interface SecurityContextType {
   isSecurityEnabled: boolean;
-  reportSecurityEvent: (event: string, details?: any) => void;
+  reportSecurityEvent: (event: string, details?: Record<string, unknown>) => void;
   checkRateLimit: (identifier: string) => boolean;
   secureStore: typeof secureStorage;
   lastSecurityCheck: Date | null;
 }
 
-const SecurityContext = createContext<SecurityContextType | undefined>(undefined);
+export const SecurityContext = createContext<SecurityContextType | undefined>(undefined);
 
 interface SecurityProviderProps {
   children: ReactNode;
@@ -112,7 +112,7 @@ export const SecurityProvider: React.FC<SecurityProviderProps> = ({ children }) 
     }
   };
 
-  const reportSecurityEvent = (event: string, details: any = {}) => {
+  const reportSecurityEvent = (event: string, details: Record<string, unknown> = {}) => {
     securityMonitor.logSecurityEvent(event, {
       ...details,
       userReported: true,
@@ -149,57 +149,4 @@ export const SecurityProvider: React.FC<SecurityProviderProps> = ({ children }) 
   );
 };
 
-export const useSecurity = (): SecurityContextType => {
-  const context = useContext(SecurityContext);
-  if (!context) {
-    throw new Error('useSecurity must be used within a SecurityProvider');
-  }
-  return context;
-};
 
-// Security Hook for components
-export const useSecurityValidation = () => {
-  const security = useSecurity();
-
-  const validateAndSanitize = {
-    url: (url: string): string => {
-      try {
-        const { sanitizeURL } = require('../utils/security');
-        return sanitizeURL(url);
-      } catch (error) {
-        security.reportSecurityEvent('url_validation_failed', { url, error });
-        return '#';
-      }
-    },
-
-    html: (html: string): string => {
-      try {
-        const { sanitizeHTML } = require('../utils/security');
-        return sanitizeHTML(html);
-      } catch (error) {
-        security.reportSecurityEvent('html_sanitization_failed', { error });
-        return '';
-      }
-    },
-
-    input: (input: string, type: 'name' | 'email' | 'message' | 'subject'): boolean => {
-      try {
-        const { validateInput, validateEmail } = require('../utils/security');
-        
-        if (type === 'email') {
-          return validateEmail(input);
-        }
-        
-        return validateInput[type] ? validateInput[type](input) : false;
-      } catch (error) {
-        security.reportSecurityEvent('input_validation_failed', { type, error });
-        return false;
-      }
-    }
-  };
-
-  return {
-    ...security,
-    validateAndSanitize
-  };
-};

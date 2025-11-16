@@ -32,7 +32,7 @@ export const Blog = () => {
         .filter(post => post.published)
         .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
       setPosts(publishedPosts)
-    } catch (e) {
+    } catch {
       setError('Failed to load posts')
     } finally {
       setLoading(false)

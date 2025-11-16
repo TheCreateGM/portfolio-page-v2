@@ -29,6 +29,7 @@ export const trackEvent = (event: AnalyticsEvent, properties?: Record<string, st
   
   // Track with Vercel Analytics
   if (typeof window !== 'undefined' && 'va' in window) {
-    (window as any).va('track', event, properties);
+    const windowWithVa = window as Window & { va: (action: string, event: string, properties?: Record<string, string | number>) => void };
+    windowWithVa.va('track', event, properties);
   }
 };

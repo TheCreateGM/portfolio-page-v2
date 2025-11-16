@@ -22,7 +22,8 @@ export const PrivacyNotice = () => {
     setShowNotice(false);
     // Disable analytics if user declines
     if (typeof window !== 'undefined' && 'va' in window) {
-      (window as any).va('opt-out');
+      const windowWithVa = window as Window & { va: (action: string) => void };
+      windowWithVa.va('opt-out');
     }
   };
 

@@ -103,14 +103,16 @@ export class PerformanceMonitor {
   }
 
   private handleFID(entry: PerformanceEntry) {
-    const fid = (entry as any).processingStart - entry.startTime;
+    const perfEntry = entry as PerformanceEntry & { processingStart?: number };
+    const fid = (perfEntry.processingStart || 0) - entry.startTime;
     if (fid > performanceConfig.thresholds.fid) {
       console.warn(`FID is slow: ${fid}ms (threshold: ${performanceConfig.thresholds.fid}ms)`);
     }
   }
 
   private handleCLS(entry: PerformanceEntry) {
-    const cls = (entry as any).value;
+    const perfEntry = entry as PerformanceEntry & { value?: number };
+    const cls = perfEntry.value || 0;
     if (cls > performanceConfig.thresholds.cls) {
       console.warn(`CLS is high: ${cls} (threshold: ${performanceConfig.thresholds.cls})`);
     }

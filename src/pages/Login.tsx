@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
+import { useAuth } from '@/hooks/useAuth'
 import { Layout } from '@/components/Layout/Layout'
 
 export const Login = () => {
@@ -26,8 +26,8 @@ export const Login = () => {
         await signUp(email, password)
         setSuccess('Account created! Please check your email to verify.')
       }
-    } catch (err: any) {
-      setError(err.message || 'Authentication error')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Authentication error')
     } finally {
       setLoading(false)
     }

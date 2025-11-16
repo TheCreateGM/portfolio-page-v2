@@ -35,7 +35,7 @@ const baseURL = import.meta.env.VITE_DIRECTUS_URL as string
 
 export const directus = createDirectus<DirectusSchema>(baseURL).with(rest())
 
-export const getPosts = async (options?: any): Promise<BlogPost[]> => {
+export const getPosts = async (options?: Record<string, unknown>): Promise<BlogPost[]> => {
   const result = await directus.request(readItems('posts', options))
   return result as unknown as BlogPost[]
 }
@@ -45,7 +45,7 @@ export const getPostBySlug = async (slug: string, fields?: string[]): Promise<Bl
   return result as unknown as BlogPost[]
 }
 
-export const getProjects = async (options?: any): Promise<Project[]> => {
+export const getProjects = async (options?: Record<string, unknown>): Promise<Project[]> => {
   const result = await directus.request(readItems('projects', options))
   return result as unknown as Project[]
 }

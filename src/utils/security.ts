@@ -68,7 +68,7 @@ export const generateNonce = (): string => {
 
 // Secure local storage with encryption
 export const secureStorage = {
-  setItem: (key: string, value: any): void => {
+  setItem: (key: string, value: unknown): void => {
     try {
       const encrypted = CryptoJS.AES.encrypt(JSON.stringify(value), 'portfolio-secret-key').toString();
       localStorage.setItem(key, encrypted);
@@ -77,7 +77,7 @@ export const secureStorage = {
     }
   },
   
-  getItem: (key: string): any => {
+  getItem: (key: string): unknown => {
     try {
       const encrypted = localStorage.getItem(key);
       if (!encrypted) return null;
@@ -134,7 +134,7 @@ export const verifyContentIntegrity = async (url: string, expectedHash: string):
 
 // Monitor for suspicious activity
 export const securityMonitor = {
-  logSecurityEvent: (event: string, details: any = {}) => {
+  logSecurityEvent: (event: string, details: Record<string, unknown> = {}) => {
     const securityLog = {
       timestamp: new Date().toISOString(),
       event,
@@ -147,7 +147,7 @@ export const securityMonitor = {
     console.warn('Security Event:', securityLog);
     
     // Store locally for analysis (encrypted)
-    const existingLogs = secureStorage.getItem('security_logs') || [];
+    const existingLogs = (secureStorage.getItem('security_logs') as Array<typeof securityLog>) || [];
     existingLogs.push(securityLog);
     
     // Keep only last 50 logs

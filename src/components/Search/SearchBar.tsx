@@ -9,6 +9,19 @@ type SearchResult = {
   excerpt?: string
 }
 
+type PostHit = {
+  id: string
+  title: string
+  slug: string
+  excerpt?: string
+}
+
+type ProjectHit = {
+  id: string
+  name: string
+  slug: string
+}
+
 export const SearchBar = () => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -27,19 +40,19 @@ export const SearchBar = () => {
     setLoading(true)
     try {
       const [posts, projects] = await Promise.all([
-        postsIndex().search<any>(searchTerm, { limit: 5 }),
-        projectsIndex().search<any>(searchTerm, { limit: 5 })
+        postsIndex().search<PostHit>(searchTerm, { limit: 5 }),
+        projectsIndex().search<ProjectHit>(searchTerm, { limit: 5 })
       ])
 
       const mappedResults: SearchResult[] = [
-        ...posts.hits.map((hit: any) => ({
+        ...posts.hits.map((hit: PostHit) => ({
           type: 'post' as const,
           id: hit.id,
           title: hit.title,
           slug: hit.slug,
           excerpt: hit.excerpt
         })),
-        ...projects.hits.map((hit: any) => ({
+        ...projects.hits.map((hit: ProjectHit) => ({
           type: 'project' as const,
           id: hit.id,
           title: hit.name,

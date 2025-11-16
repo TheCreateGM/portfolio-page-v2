@@ -15,7 +15,7 @@ export default function EnvCheck() {
     'VITE_MEILISEARCH_KEY': import.meta.env.VITE_MEILISEARCH_KEY ? '✓ Set' : undefined,
   }
 
-  const missingVars = Object.entries(envVars).filter(([_, value]) => !value)
+  const missingVars = Object.entries(envVars).filter(([, value]) => !value)
   const hasIssues = missingVars.length > 0
 
   return (

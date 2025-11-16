@@ -36,7 +36,7 @@ export const BlogPost = ({ slug }: BlogPostProps) => {
     try {
       const foundPost = postsData.find(p => p.slug === slug && p.published)
       setPost(foundPost || null)
-    } catch (e) {
+    } catch {
       setError('Failed to load post')
     } finally {
       setLoading(false)

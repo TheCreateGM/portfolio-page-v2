@@ -22,4 +22,10 @@ export default tseslint.config([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/contexts/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])
