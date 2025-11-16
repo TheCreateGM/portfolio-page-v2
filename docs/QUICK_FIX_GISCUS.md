@@ -62,9 +62,13 @@ VITE_GISCUS_CATEGORY_ID=<your-category-id-from-step-3>
 VITE_GISCUS_MAPPING=pathname
 VITE_GISCUS_LANG=en
 VITE_GISCUS_THEME=preferred_color_scheme
+VITE_GISCUS_ORIGIN=https://axogm.vercel.app
 ```
 
-**Important:** Set for all environments (Production, Preview, Development)
+**Important:** 
+- Set for all environments (Production, Preview, Development)
+- The `VITE_GISCUS_ORIGIN` must match your production URL exactly
+- This fixes the "404 NOT_FOUND" error when users try to sign in with GitHub
 
 ### 5. Redeploy (1 minute)
 
