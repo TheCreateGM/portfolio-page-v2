@@ -9,6 +9,8 @@
   "installCommand": "npm install",
   "outputDirectory": "dist",
   "rewrites": [
+    { "source": "/blog/:slug", "destination": "/index.html" },
+    { "source": "/giscus-callback", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
