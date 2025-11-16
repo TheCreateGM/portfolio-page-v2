@@ -12,6 +12,14 @@ import './App.css';
 
 function App() {
   useEffect(() => {
+    // Handle redirect from 404.html
+    const redirectPath = sessionStorage.getItem('redirect_path');
+    if (redirectPath && redirectPath !== '/') {
+      sessionStorage.removeItem('redirect_path');
+      window.history.replaceState({}, '', redirectPath);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
+
     // Set initial theme based on localStorage or system preference
     const theme = localStorage.getItem('theme') || 
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
