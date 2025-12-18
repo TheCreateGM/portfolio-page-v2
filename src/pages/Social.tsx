@@ -37,20 +37,20 @@ export const Social = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-center"
           >
-            <div className="card max-w-md mx-auto p-8">
-              <h3 className="text-2xl font-bold mb-4">Support My Work</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Donations help me create more projects!
-              </p>
-              <a
-                href="https://www.paypal.com/paypalme/axogm"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center"
-              >
-                <i className="fab fa-paypal mr-2"></i>
-                Donate via PayPal
-              </a>
+            <div className="card max-w-4xl mx-auto p-4">
+              <h3 className="text-2xl font-bold mb-4 text-center">Support My Work</h3>
+              <iframe 
+                id="kofiframe" 
+                src="https://ko-fi.com/axogm/?hidefeed=true&widget=true&embed=true&preview=true" 
+                style={{
+                  border: 'none',
+                  width: '100%',
+                  padding: '4px',
+                  background: '#f9f9f9'
+                }}
+                height="712" 
+                title="axogm"
+              />
             </div>
           </motion.div>
         </div>
