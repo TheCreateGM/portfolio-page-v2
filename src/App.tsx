@@ -21,9 +21,9 @@ function App() {
     }
 
     // Set initial theme based on localStorage or system preference
-    const theme = localStorage.getItem('theme') || 
+    const theme = localStorage.getItem('theme') ||
       (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    
+
     document.documentElement.classList.add(theme);
 
     // Initialize performance monitoring
@@ -35,21 +35,21 @@ function App() {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const link = target.closest('a');
-      
+
       if (link && link.href) {
         // Don't intercept external links (different origin or target="_blank")
-        if (link.target === '_blank' || 
-            link.rel.includes('noopener') || 
-            link.origin !== window.location.origin ||
-            link.href.startsWith('http') && !link.href.startsWith(window.location.origin)) {
+        if (link.target === '_blank' ||
+          link.rel.includes('noopener') ||
+          link.origin !== window.location.origin ||
+          link.href.startsWith('http') && !link.href.startsWith(window.location.origin)) {
           return; // Let the browser handle external links normally
         }
-        
+
         // Only intercept internal SPA routes (not games)
         const url = new URL(link.href);
         const path = url.pathname;
         const internalRoutes = ['/', '/about', '/projects', '/social', '/blog', '/login'];
-        
+
         // Don't intercept game links or blog post links - let them open normally
         const isBlogPost = path.startsWith('/blog/') && path !== '/blog';
         if ((internalRoutes.includes(path) || isBlogPost) && !path.startsWith('/games/')) {

@@ -7,9 +7,9 @@ import { preventClickjacking, securityMonitor } from './utils/security'
 // Initialize security measures
 try {
   preventClickjacking();
-  securityMonitor.logSecurityEvent('app_initialization', { 
+  securityMonitor.logSecurityEvent('app_initialization', {
     timestamp: new Date().toISOString(),
-    userAgent: navigator.userAgent 
+    userAgent: navigator.userAgent
   });
 } catch (error) {
   console.error('Security initialization failed:', error);

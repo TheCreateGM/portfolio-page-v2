@@ -45,14 +45,14 @@ class RateLimiter {
   isAllowed(identifier: string): boolean {
     const now = Date.now();
     const requests = this.requests.get(identifier) || [];
-    
+
     // Remove old requests outside the window
     const validRequests = requests.filter(time => now - time < this.windowMs);
-    
+
     if (validRequests.length >= this.maxRequests) {
       return false;
     }
-    
+
     validRequests.push(now);
     this.requests.set(identifier, validRequests);
     return true;
@@ -76,12 +76,12 @@ export const secureStorage = {
       console.error('Failed to store encrypted data:', error);
     }
   },
-  
+
   getItem: (key: string): unknown => {
     try {
       const encrypted = localStorage.getItem(key);
       if (!encrypted) return null;
-      
+
       const decrypted = CryptoJS.AES.decrypt(encrypted, 'portfolio-secret-key');
       return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
     } catch (error) {
@@ -89,7 +89,7 @@ export const secureStorage = {
       return null;
     }
   },
-  
+
   removeItem: (key: string): void => {
     localStorage.removeItem(key);
   }
@@ -98,14 +98,14 @@ export const secureStorage = {
 // Input validation for contact forms
 export const validateInput = {
   name: (name: string): boolean => {
-    return validator.isLength(name, { min: 1, max: 100 }) && 
-           validator.isAlpha(name.replace(/\s/g, ''));
+    return validator.isLength(name, { min: 1, max: 100 }) &&
+      validator.isAlpha(name.replace(/\s/g, ''));
   },
-  
+
   message: (message: string): boolean => {
     return validator.isLength(message, { min: 1, max: 1000 });
   },
-  
+
   subject: (subject: string): boolean => {
     return validator.isLength(subject, { min: 1, max: 200 });
   }
@@ -142,19 +142,19 @@ export const securityMonitor = {
       userAgent: navigator.userAgent,
       url: window.location.href
     };
-    
+
     // In production, send this to your security monitoring service
     console.warn('Security Event:', securityLog);
-    
+
     // Store locally for analysis (encrypted)
     const existingLogs = (secureStorage.getItem('security_logs') as Array<typeof securityLog>) || [];
     existingLogs.push(securityLog);
-    
+
     // Keep only last 50 logs
     if (existingLogs.length > 50) {
       existingLogs.shift();
     }
-    
+
     secureStorage.setItem('security_logs', existingLogs);
   }
 };
