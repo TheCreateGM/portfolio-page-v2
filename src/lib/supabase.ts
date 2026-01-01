@@ -1,9 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 const url = import.meta.env.VITE_SUPABASE_URL
 const anon = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-let client
+let client: SupabaseClient
 
 if (url && anon) {
   client = createClient(url, anon, {
@@ -15,7 +16,7 @@ if (url && anon) {
   })
 } else {
   console.warn('VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY missing. Using mock Supabase client. Auth will not work.')
-  // Mock client to prevent crash
+  // Mock client to prevent crash - cast as SupabaseClient for type safety
   client = {
     auth: {
       getSession: async () => ({ data: { session: null }, error: null }),
@@ -31,7 +32,7 @@ if (url && anon) {
       update: () => ({ data: [], error: null }),
       delete: () => ({ data: [], error: null })
     })
-  } as any // Cast to any to bypass strict type checks for the mock
+  } as unknown as SupabaseClient
 }
 
 export const supabase = client
