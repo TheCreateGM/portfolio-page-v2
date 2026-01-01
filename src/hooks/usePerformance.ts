@@ -9,7 +9,7 @@ export const usePerformance = (componentName: string) => {
   useEffect(() => {
     monitor.current = PerformanceMonitor.getInstance();
     mountTime.current = performance.now();
-    
+
     // Mark component mount
     monitor.current.mark(`${componentName}-mount-start`);
 
@@ -17,7 +17,7 @@ export const usePerformance = (componentName: string) => {
       if (monitor.current && mountTime.current) {
         // Mark component unmount
         monitor.current.mark(`${componentName}-mount-end`);
-        
+
         // Measure component lifecycle
         monitor.current.measure(
           `${componentName}-mount-duration`,
@@ -45,6 +45,6 @@ export const usePerformance = (componentName: string) => {
   return {
     markPerformance,
     measurePerformance,
-    componentMountTime: mountTime.current
+
   };
 };

@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const PrivacyNotice = () => {
-  const [showNotice, setShowNotice] = useState(false);
-
-  useEffect(() => {
-    // Check if user has already accepted privacy policy
+  const [showNotice, setShowNotice] = useState(() => {
+    // Check if user has already accepted/declined privacy policy
+    if (typeof window === 'undefined') return false;
     const hasAccepted = localStorage.getItem('privacy-accepted');
-    if (!hasAccepted) {
-      setShowNotice(true);
-    }
-  }, []);
+    return !hasAccepted;
+  });
 
   const acceptPrivacy = () => {
     localStorage.setItem('privacy-accepted', 'true');
@@ -41,8 +38,8 @@ export const PrivacyNotice = () => {
               <div className="flex-1">
                 <h3 className="text-sm font-semibold mb-1">Privacy & Analytics</h3>
                 <p className="text-xs text-gray-600 dark:text-gray-400">
-                  This site uses privacy-friendly analytics to understand visitor behavior. 
-                  No personal data is collected, and your IP is anonymized. 
+                  This site uses privacy-friendly analytics to understand visitor behavior.
+                  No personal data is collected, and your IP is anonymized.
                   You can opt out at any time.
                 </p>
               </div>
