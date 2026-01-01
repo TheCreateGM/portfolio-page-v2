@@ -77,7 +77,7 @@ export const ProjectsList = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: catIndex * 0.1 }}
           >
-            <h2 className="text-3xl font-bold mb-8 capitalize">
+            <h2 className="text-3xl font-bold mb-8 capitalize text-gray-900 dark:text-white">
               {category.replace('_', ' ')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -99,14 +99,14 @@ export const ProjectsList = () => {
                       />
                     ) : (
                       <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">No Image</span>
+                        <span className="text-gray-600 dark:text-gray-400">No Image</span>
                       </div>
                     )}
                   </div>
 
                   {/* Project Content */}
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-semibold mb-4">{project.title}</h3>
+                    <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">{project.title}</h3>
                     
                     {/* Tech Logos */}
                     {project.logos && project.logos.length > 0 && (
@@ -125,14 +125,14 @@ export const ProjectsList = () => {
                     )}
 
                     {/* Project Links */}
-                    <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="mt-auto pt-4 border-t border-gray-300 dark:border-gray-700">
                       <div className="flex flex-wrap gap-2">
                         {project.live_link && (
                           <a
                             href={project.live_link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200"
+                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
                             onClick={() => trackEvent(analyticsConfig.events.PROJECT_VIEW, { 
                               project: project.title, 
                               category: category,
@@ -148,7 +148,7 @@ export const ProjectsList = () => {
                             href={project.repo_link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors duration-200"
+                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
                             onClick={() => trackEvent(analyticsConfig.events.PROJECT_VIEW, { 
                               project: project.title, 
                               category: category,
@@ -160,7 +160,7 @@ export const ProjectsList = () => {
                           </a>
                         )}
                         {!project.live_link && !project.repo_link && (
-                          <span className="text-gray-500 dark:text-gray-400 text-sm">No Links</span>
+                          <span className="text-gray-600 dark:text-gray-400 text-sm">No Links</span>
                         )}
                       </div>
                     </div>

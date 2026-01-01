@@ -76,16 +76,16 @@ export const SocialLinks = () => {
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center p-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-200 group"
+            className="flex flex-col items-center p-4 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-200 group"
             title={platform.name}
             onClick={() => trackEvent(analyticsConfig.events.SOCIAL_CLICK, { 
               platform: platform.name 
             })}
           >
-            <div className="text-gray-600 dark:text-gray-400 group-hover:text-blue-600 transition-colors duration-200 flex items-center justify-center">
+            <div className="text-gray-700 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 flex items-center justify-center">
               {getIconComponent(platform.fa_class, platform.name)}
             </div>
-            <span className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 transition-colors duration-200">
+            <span className="mt-2 text-sm font-medium text-gray-800 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
               {platform.name}
             </span>
           </a>

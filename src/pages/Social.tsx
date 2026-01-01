@@ -13,8 +13,8 @@ export const Social = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Social Media</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">Social Media</h1>
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
               Find me on these platforms:
             </p>
           </motion.div>
@@ -29,7 +29,7 @@ export const Social = () => {
       </section>
 
       {/* Support Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ export const Social = () => {
             className="text-center"
           >
             <div className="card max-w-4xl mx-auto p-4">
-              <h3 className="text-2xl font-bold mb-6 text-center">Support My Work</h3>
+              <h3 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">Support My Work</h3>
               
               {/* Payment Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">

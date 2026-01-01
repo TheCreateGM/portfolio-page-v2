@@ -77,14 +77,14 @@ export const LazyImage = ({
       {/* Loading placeholder */}
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
-          <div className="text-gray-400 text-sm">Loading...</div>
+          <div className="text-gray-600 dark:text-gray-300 text-sm">Loading...</div>
         </div>
       )}
       
       {/* Error state */}
       {hasError && (
         <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-          <div className="text-gray-400 text-sm">Failed to load image</div>
+          <div className="text-gray-600 dark:text-gray-300 text-sm">Failed to load image</div>
         </div>
       )}
     </div>

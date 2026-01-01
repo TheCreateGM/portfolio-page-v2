@@ -35,7 +35,8 @@ class Particle {
         this.radius = Math.random() * 2 + 1;
 
         const colors = this.system.getThemeColors();
-        this.color = `hsl(${Math.random() * 360}, 70%, ${colors.particleLightness})`;
+        const saturation = this.system.isDarkMode ? 70 : 50;
+        this.color = `hsl(${Math.random() * 360}, ${saturation}%, ${colors.particleLightness})`;
         this.alpha = 0;
         this.life = 0;
         this.maxLife = Math.random() * 60 + 120;
@@ -56,12 +57,13 @@ class Particle {
 
         this.life++;
 
+        const maxAlpha = this.system.isDarkMode ? 0.8 : 0.5;
         if (this.life < this.maxLife / 4) {
-            this.alpha = (this.life / (this.maxLife / 4)) * 0.8 + 0.2;
+            this.alpha = (this.life / (this.maxLife / 4)) * maxAlpha + 0.2;
         } else if (this.life > (this.maxLife * 3) / 4) {
-            this.alpha = (1 - (this.life - (this.maxLife * 3) / 4) / (this.maxLife / 4)) * 0.8 + 0.2;
+            this.alpha = (1 - (this.life - (this.maxLife * 3) / 4) / (this.maxLife / 4)) * maxAlpha + 0.2;
         } else {
-            this.alpha = 1;
+            this.alpha = maxAlpha;
         }
 
         if (this.life > this.maxLife) {
@@ -166,8 +168,8 @@ export class ParticleSystem {
         } else {
             return {
                 background: "rgba(255, 255, 255, 0)", // Make it transparent
-                particleLightness: "45%",
-                lineLightness: "35%",
+                particleLightness: "60%",
+                lineLightness: "50%",
             };
         }
     }
@@ -202,8 +204,10 @@ export class ParticleSystem {
 
                     const hueMatch = p1.color.match(/\d+/);
                     const hue = hueMatch ? hueMatch[0] : '0';
-                    const alpha = ((this.maxLineDistance - dist) / this.maxLineDistance) * 0.5;
-                    this.ctx.strokeStyle = `hsla(${hue}, 70%, ${colors.lineLightness}, ${alpha})`;
+                    const saturation = this.isDarkMode ? 70 : 40;
+                    const baseAlpha = this.isDarkMode ? 0.5 : 0.3;
+                    const alpha = ((this.maxLineDistance - dist) / this.maxLineDistance) * baseAlpha;
+                    this.ctx.strokeStyle = `hsla(${hue}, ${saturation}%, ${colors.lineLightness}, ${alpha})`;
                     this.ctx.lineWidth = 0.5;
                     this.ctx.stroke();
                 }

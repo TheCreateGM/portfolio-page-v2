@@ -29,7 +29,7 @@ export const Navbar = ({ currentPage = 'home' }: NavbarProps) => {
           <div className="flex items-center">
             <a href="/" className="flex items-center space-x-2">
               <img src="/icon.png" alt="Logo" className="w-8 h-8" />
-              <span className="font-bold text-xl">AxoGM</span>
+              <span className="font-bold text-xl text-gray-900 dark:text-white">AxoGM</span>
             </a>
           </div>
 

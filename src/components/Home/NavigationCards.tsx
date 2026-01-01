@@ -57,10 +57,10 @@ export const NavigationCards = () => {
                     />
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 flex-1">{card.subtitle}</p>
-                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <span className="text-blue-600 font-medium group-hover:text-blue-700 transition-colors duration-200">
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{card.title}</h3>
+                    <p className="text-gray-700 dark:text-gray-300 flex-1">{card.subtitle}</p>
+                    <div className="mt-4 pt-4 border-t border-gray-300 dark:border-gray-700">
+                      <span className="text-blue-600 dark:text-blue-400 font-medium group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors duration-200">
                         See More →
                       </span>
                     </div>

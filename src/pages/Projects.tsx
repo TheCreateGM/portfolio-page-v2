@@ -13,8 +13,8 @@ export const Projects = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Projects</h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">Projects</h1>
+            <p className="text-lg text-gray-700 dark:text-gray-300">
               A collection of my work across different technologies and platforms.
             </p>
           </motion.div>

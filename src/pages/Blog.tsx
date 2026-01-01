@@ -44,7 +44,7 @@ export const Blog = () => {
       <Layout currentPage="blog">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
-            <p className="text-xl">Loading blog posts...</p>
+            <p className="text-xl text-gray-900 dark:text-white">Loading blog posts...</p>
           </div>
         </div>
       </Layout>
@@ -55,7 +55,7 @@ export const Blog = () => {
     return (
       <Layout currentPage="blog">
         <div className="container mx-auto px-4 py-16">
-          <div className="text-center text-red-500">
+          <div className="text-center text-red-500 dark:text-red-400">
             <p className="text-xl">Error: {error}</p>
             <p className="mt-4">Please check your Directus configuration.</p>
           </div>
@@ -67,11 +67,11 @@ export const Blog = () => {
   return (
     <Layout currentPage="blog">
       <div className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-8">Blog</h1>
+        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">Blog</h1>
 
         {posts.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-gray-700 dark:text-gray-300">
               No blog posts yet. Check back soon!
             </p>
           </div>
@@ -93,20 +93,20 @@ export const Blog = () => {
                   <h2 className="text-2xl font-bold mb-2">
                     <a
                       href={`/blog/${post.slug}`}
-                      className="hover:text-blue-500 transition-colors"
+                      className="text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
                     >
                       {post.title}
                     </a>
                   </h2>
                   {post.excerpt && (
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">{post.excerpt}</p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">{post.excerpt}</p>
                   )}
                   {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
                       {post.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-sm"
+                          className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded text-sm"
                         >
                           {tag}
                         </span>
@@ -114,7 +114,7 @@ export const Blog = () => {
                     </div>
                   )}
                   {post.published_at && (
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       {new Date(post.published_at).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',

@@ -33,7 +33,7 @@ export const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Information</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">Information</h1>
           </motion.div>
         </div>
       </section>
@@ -47,9 +47,9 @@ export const About = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-6">About Me</h2>
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">About Me</h2>
             {infoData?.bio && (
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
                 Many people call me {infoData.bio.nickname} and you can call me {infoData.bio.nickname} if you want. 
                 I'm from {infoData.bio.location}.
               </p>
@@ -63,15 +63,15 @@ export const About = () => {
 
 
       {/* Projects Link Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 text-center bg-gray-50 dark:bg-gray-900">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 text-center bg-gray-100 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h2 className="text-3xl font-bold mb-4">My Projects</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">My Projects</h2>
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
               I still work on many things. Click the button below to see the projects page.
             </p>
             <a

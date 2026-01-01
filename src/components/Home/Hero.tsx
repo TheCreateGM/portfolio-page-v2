@@ -9,10 +9,10 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
             Hello, I'm AxoGM
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400">
+          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300">
             I'm a fullstack Engineer.
           </p>
         </motion.div>
